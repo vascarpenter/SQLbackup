@@ -286,10 +286,16 @@ func tableAnalyze(db *sql.DB, tablename string) {
 	}
 	rows.Close()
 
-	tsn := "TABLESPACE \"" + tablespace + "\""
-	//fmt.Printf("TSN '%s'\n", tsn)
-	ddl = strings.Replace(ddl, tsn+" \n", tsn+";\n", 4)
-	ddl = strings.Replace(ddl, tsn+"  ENABLE\n", tsn+"  ENABLE;\n", 4)
+	// 単純な TABLESPACEの変換だけではだめ
+
+	ddl = strings.TrimSpace(ddl)
+	ddl = strings.TrimRight(ddl, "\n")
+	ddl = strings.TrimRight(ddl, " ")
+	ddl += ";\n"
+
+	// DDL の中に INDEX PKがあるものがあり、"ALTER TABLE "ADMIN"."XXX" ADD PRIMARY KEY" の前にセミコロンがない→つける
+	ddl = strings.Replace(ddl, " \nALTER TABLE ", ";\nALTER TABLE ", 2)
+
 	if droptable {
 		fmt.Printf("DROP TABLE \"%s\";\n", tablename)
 	}

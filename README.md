@@ -1,6 +1,6 @@
 # SQLbackup
 
-- SQL backup command line tool (written in go)
+- Oracle SQL backup command line tool (written in go)
 
 - BUILD 
   - `go build .`
@@ -9,7 +9,7 @@
 - Usage
   - `sqlbackup user/pass@tnsaddr [-d]`
     - `-d` drop table before create
-    - `--tablespace <name>` change default table space name (default: DATA, that is used in Autonomous Data Warehouse)
+    - `--tablespace <name>` change default table space name (default: DATA, that is used in Autonomous Data Warehouse) (This option is meaningless.)
   - write SQL dump for all table in database user
 
 - caution

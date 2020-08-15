@@ -1,17 +1,17 @@
 # SQLbackup
 
-- Oracle SQL backup command line tool (written in go)
+- Oracle SQL backup コマンドラインツール (goで作成)
 
-- BUILD 
+- ビルド方法 
   - `go build -o SQLbackup`
 
-- Usage
+- 使用方法
   - `./SQLbackup user/pass@tnsaddr [-d] [--tables <name1,name2>] [--tablespace <name>]`
-    - `-d` Insert "drop table" before create
-    - `--tablespace <name>` Change default table space name (default: DATA, that is used in Autonomous Data Warehouse) (This option is meaningless.)
-    - `--tables <table1,table2,...>` Specify table name(s) to export. Separate names by ",".
+    - `-d` "drop table" を  create tableの前に挿入
+    - `--tablespace <name>` table space名を変更 (default: DATA) (このオプションは現在意味がない)
+    - `--tables <table1,table2,...>` 出力するテーブル名を変更。","で区切ること。指定しない場合すべてのテーブルを出力。
 
-- eg. `./SQLbackup $OCISTRING -d --tables BLOODTEMP >test.sql`
+- 例 `./SQLbackup $OCISTRING -d --tables BLOODTEMP >test.sql`
 
 ```sql
 DROP TABLE "BLOODTEMP";

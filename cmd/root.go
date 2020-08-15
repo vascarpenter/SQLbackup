@@ -70,7 +70,8 @@ func Execute() {
 }
 
 var droptable bool
-var tablespace string = "DATA"
+var tablespace string
+var exporttables string
 
 func init() {
 	cobra.OnInitialize(initConfig)
@@ -85,7 +86,7 @@ func init() {
 	// when this action is called directly.
 	rootCmd.PersistentFlags().BoolVarP(&droptable, "drop", "d", false, "DROP table beforce CREATE")
 	rootCmd.PersistentFlags().StringVar(&tablespace, "tablespace", "DATA", "tablespace name (default is DATA)")
-
+	rootCmd.PersistentFlags().StringVar(&exporttables, "tables", "", "export tables separated by ',' (default is null = all tables)")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -313,18 +314,29 @@ func analyze(credential string) {
 	ctx := context.Background()
 	var rows *sql.Rows
 
-	rows, err = db.QueryContext(ctx, "select table_name from user_tables")
-	if err != nil {
-		panic(err)
-	}
-	for rows.Next() {
-		var tablename string
-		err = rows.Scan(&tablename)
+	if exporttables == "" {
+		// all tables
+		rows, err = db.QueryContext(ctx, "select table_name from user_tables")
 		if err != nil {
 			panic(err)
 		}
-		tableAnalyze(db, tablename)
+		for rows.Next() {
+			var tablename string
+			err = rows.Scan(&tablename)
+			if err != nil {
+				panic(err)
+			}
+
+			tableAnalyze(db, tablename)
+		}
+		rows.Close()
+
+	} else {
+		// user specified tables
+		s := strings.Split(exporttables, ",")
+		for i := range s {
+			tableAnalyze(db, s[i])
+		}
 	}
-	rows.Close()
 
 }

@@ -21,6 +21,7 @@ share/
 *.spf
 *.zip
 m
+SQLbackup
 *.sql
 *.html
 *.sh

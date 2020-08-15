@@ -12,6 +12,9 @@
 
   - write SQL dump for all table in database user
 
+- caution
+  - indexes are ignored
+  
 - eg. `sqlbackup $OCISTRING -d >test.sql`
 
 ```sql

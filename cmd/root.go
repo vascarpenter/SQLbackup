@@ -70,6 +70,7 @@ func Execute() {
 }
 
 var droptable bool
+var tablespace string = "DATA"
 
 func init() {
 	cobra.OnInitialize(initConfig)
@@ -83,6 +84,8 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.PersistentFlags().BoolVarP(&droptable, "drop", "d", false, "DROP table beforce CREATE")
+	rootCmd.PersistentFlags().StringVar(&tablespace, "tablespace", "DATA", "tablespace name (default is DATA)")
+
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -279,10 +282,14 @@ func tableAnalyze(db *sql.DB, tablename string) {
 		if err != nil {
 			panic(err)
 		}
-		ddl += row + ";\n"
+		ddl += row + "\n"
 	}
 	rows.Close()
 
+	tsn := "TABLESPACE \"" + tablespace + "\""
+	//fmt.Printf("TSN '%s'\n", tsn)
+	ddl = strings.Replace(ddl, tsn+" \n", tsn+";\n", 4)
+	ddl = strings.Replace(ddl, tsn+"  ENABLE\n", tsn+"  ENABLE;\n", 4)
 	if droptable {
 		fmt.Printf("DROP TABLE \"%s\";\n", tablename)
 	}

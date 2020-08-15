@@ -294,8 +294,8 @@ func tableAnalyze(db *sql.DB, tablename string) {
 	ddl += ";\n"
 
 	// DDL の中に INDEX PKがあるものがあり、"ALTER TABLE "ADMIN"."XXX" ADD PRIMARY KEY" の前にセミコロンがない→つける
-	ddl = strings.Replace(ddl, " \nALTER TABLE ", ";\nALTER TABLE ", 2)
-
+	ddl = strings.Replace(ddl, " \nALTER TABLE ", ";\nALTER TABLE ", 4)
+	ddl = strings.Replace(ddl, " \n  CREATE UNIQUE INDEX", ";\nCREATE UNIQUE INDEX", 4)
 	if droptable {
 		fmt.Printf("DROP TABLE \"%s\";\n", tablename)
 	}

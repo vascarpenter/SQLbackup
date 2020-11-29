@@ -226,6 +226,8 @@ func ddlAnalyze(db *sql.DB, tablename string, ddl string) {
 						s1 += "NULL,"
 					} else if strings.HasPrefix(tableColumns[i].Attr, "NVARCHAR") {
 						s1 += "'" + string(col) + "',"
+					} else if strings.HasPrefix(tableColumns[i].Attr, "VARCHAR2") {
+						s1 += "'" + string(col) + "',"
 					} else if strings.HasPrefix(tableColumns[i].Attr, "DATE") {
 						s1 += "TO_DATE('" + string(col) + "','RR-MM-DD'),"
 					} else if strings.HasPrefix(tableColumns[i].Attr, "BLOB") {

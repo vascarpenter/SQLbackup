@@ -31,3 +31,6 @@ Insert Into BLOODTEMP ("DATE","TEMP") VALUES (TO_DATE('20-07-28','RR-MM-DD'),36.
 ...
 Insert Into BLOODTEMP ("DATE","TEMP") VALUES (TO_DATE('20-08-14','RR-MM-DD'),36.7);
 ```
+
+- Changes
+  - 20201129 VARCHAR2 data, single quote (was: NVARCHAR)

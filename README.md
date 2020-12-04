@@ -34,3 +34,4 @@ Insert Into BLOODTEMP ("DATE","TEMP") VALUES (TO_DATE('20-08-14','RR-MM-DD'),36.
 
 - Changes
   - 20201129 VARCHAR2 data, single quote (was: NVARCHAR)
+  - 20201204 changed oracle driver to https://github.com/godror/godror

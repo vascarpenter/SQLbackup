@@ -34,3 +34,4 @@ Insert Into BLOODTEMP ("DATE","TEMP") VALUES (TO_DATE('20-08-14','RR-MM-DD'),36.
 
 - 変更
   - 20201129 VARCHAR2でも single quote
+  - 20201204 別コンピュータでpanic: OCIEnvCreate error多発し改善しないため、oracleドライバをhttps://github.com/godror/godrorに変更

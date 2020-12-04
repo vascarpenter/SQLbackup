@@ -27,13 +27,14 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/mattn/go-oci8"
+	_ "github.com/godror/godror"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
+// ColumnAttr  database of column attributes
 type ColumnAttr struct {
 	Name    string
 	Attr    string // eg. VARCHAR(20)
@@ -308,7 +309,7 @@ func tableAnalyze(db *sql.DB, tablename string) {
 
 // analyze : analyze user
 func analyze(credential string) {
-	db, err := sql.Open("oci8", credential)
+	db, err := sql.Open("godror", credential)
 	if err != nil {
 		panic(err)
 	}

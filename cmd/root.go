@@ -274,8 +274,13 @@ func tableAnalyze(db *sql.DB, tablename string) {
 	defer cancel()
 
 	var rows *sql.Rows
-	rows, err = db.QueryContext(ctx, "select dbms_metadata.get_ddl('TABLE',:1) from dual", tablename)
+	if strings.Count(tablename, ".") == 1 {
+		parts := strings.Split(tablename, ".")
+		rows, err = db.QueryContext(ctx, "select dbms_metadata.get_ddl('TABLE',:1,:2) from dual", parts[1], parts[0])
+	} else {
 
+		rows, err = db.QueryContext(ctx, "select dbms_metadata.get_ddl('TABLE',:1) from dual", tablename)
+	}
 	if err != nil {
 		panic(err)
 	}

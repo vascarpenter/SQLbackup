@@ -6,7 +6,7 @@
   - `go build -o SQLbackup`
 
 - Usage
-  - `./SQLbackup user/pass@tnsaddr [-d] [--tables <name1,name2>] [--tablespace <name>]`
+  - `./SQLbackup user/pass@tnsaddr [-d] [--tables <name1,name2,owner.name3>] [--tablespace <name>]`
     - `-d` Insert "drop table" before create
     - `--tablespace <name>` Change default table space name (default: DATA, that is used in Autonomous Data Warehouse) (This option is meaningless.)
     - `--tables <table1,table2,...>` Specify table name(s) to export. Separate names by ",".
@@ -33,5 +33,6 @@ Insert Into BLOODTEMP ("DATE","TEMP") VALUES (TO_DATE('20-08-14','RR-MM-DD'),36.
 ```
 
 - Changes
+  - 20210324 add support for other owner's table
   - 20201129 VARCHAR2 data, single quote (was: NVARCHAR)
   - 20201204 changed oracle driver to https://github.com/godror/godror
